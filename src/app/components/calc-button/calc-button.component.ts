@@ -1,15 +1,12 @@
-import { Component,Input,EventEmitter,Output } from '@angular/core';
-
-
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-calc-button',
   templateUrl: './calc-button.component.html',
-  styleUrls: ['./calc-button.component.css']
+  styleUrls: ['./calc-button.component.css'],
 })
 export class CalcButtonComponent {
-
-  @Input() buttonText: string="";
+  @Input() buttonText: string = '';
   @Output() buttonClick: EventEmitter<string> = new EventEmitter<string>();
 
   handleClick() {

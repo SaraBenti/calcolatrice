@@ -1,92 +1,231 @@
 import { Component } from '@angular/core';
 
-
 @Component({
   selector: 'app-calcolatrice',
   templateUrl: './calcolatrice.component.html',
-  styleUrls: ['./calcolatrice.component.css']
+  styleUrls: ['./calcolatrice.component.css'],
 })
 export class CalcolatriceComponent {
-  testoDisplay: string = '0';
-  operando1:number=0;
-  operando2:number=0;
-  operatore:string="";
-  setOperatore=false;
-  daCalcolare="";
-  result=false;
+  testoDisp: string = '0';
+
+  operando1: number | null = null;
+  operando2: number | null = null;
+  operatore: string | null = null;
+
+  buffer: string = '';
+
+  setOperatore = false; // indica se è in atto un'operazione
+  daCalcolare = '';
+  result = false;
 
   pressButton(but: string) {
     if (but === '/' || but === '*' || but === '-' || but === '+') {
-      const lastBut = this.testoDisplay[this.testoDisplay.length - 1];
-      console.log(lastBut);
-      if (lastBut === '/' || lastBut === '*' || lastBut === '-' || lastBut === '+')  {
+      const lastBut = this.testoDisp[this.testoDisp.length - 1];
+      console.log('parseButton: ', lastBut, ' button: ', but);
+      if (
+        lastBut === '/' ||
+        lastBut === '*' ||
+        lastBut === '-' ||
+        lastBut === '+'
+      ) {
         this.setOperatore = true;
       }
-      if ((this.setOperatore) || (this.testoDisplay === '')) {
+      if (this.setOperatore || this.testoDisp === '') {
         return;
       }
-      this.operando1 = parseFloat(this.testoDisplay);
+      this.operando1 = parseFloat(this.testoDisp);
       this.operatore = but;
+
       this.setOperatore = true;
-   }
-   if (this.testoDisplay.length === 10) {
-     return;
-   }
-   this.testoDisplay += but;
+    }
+    if (this.testoDisp.length === 10) {
+      return;
+    }
+    this.testoDisp += but;
   }
   getResult() {
-    this.daCalcolare = this.testoDisplay;
-    this.operando2 = parseFloat(this.testoDisplay.split(this.operatore)[1]);
-    if (this.operatore === '/') {
-    
-      this.testoDisplay = (this.operando1 / this.operando2).toString();
-      if (this.testoDisplay.length > 9) {
-        this.testoDisplay = this.testoDisplay.substring(0, 9);
+    this.daCalcolare = this.testoDisp;
+    this.operando2 = parseFloat(
+      this.testoDisp.split(this.operatore != null ? this.operatore : '')[1]
+    );
+    if (
+      this.operatore === '/' &&
+      this.operando1 != null &&
+      this.operando2 != null
+    ) {
+      this.testoDisp = (this.operando1 / this.operando2).toString();
+      if (this.testoDisp.length > 9) {
+        this.testoDisp = this.testoDisp.substring(0, 9);
       }
-    } else if (this.operatore === '*') {
-     
-      this.testoDisplay = (this.operando1 * this.operando2).toString();
-  
-      if (this.testoDisplay.length > 9) {
-        this.testoDisplay = 'ERROR';
-      
+    } else if (
+      this.operatore === '*' &&
+      this.operando1 != null &&
+      this.operando2 != null
+    ) {
+      this.testoDisp = (this.operando1 * this.operando2).toString();
+
+      if (this.testoDisp.length > 9) {
+        this.testoDisp = 'ERROR';
       }
-    } else if (this.operatore === '-') {
-     
-      this.testoDisplay = (this.operando1 - this.operando2).toString();
-    
-    } else if (this.operatore === '+') {
-     
-      this.testoDisplay = (this.operando1 + this.operando2).toString();
-    
-      if (this.testoDisplay.length > 9) {
-        this.testoDisplay = 'ERROR';
-      
+    } else if (
+      this.operatore === '-' &&
+      this.operando1 != null &&
+      this.operando2 != null
+    ) {
+      this.testoDisp = (this.operando1 - this.operando2).toString();
+    } else if (
+      this.operatore === '+' &&
+      this.operando1 != null &&
+      this.operando2 != null
+    ) {
+      this.testoDisp = (this.operando1 + this.operando2).toString();
+
+      if (this.testoDisp.length > 9) {
+        this.testoDisp = 'ERROR';
       }
     } else {
-      this.testoDisplay = 'ERROR: Invalid Operation';
+      this.testoDisp = 'ERROR';
     }
     this.result = true;
   }
-   
-  getReset(){
-    this.testoDisplay = '';
-  
+
+  getReset() {
+    this.testoDisp = '';
+
     this.setOperatore = false;
   }
-  
-  typeOfButton(but:string){
-    switch(but){
-      case ('AC'):
+
+  doReset() {
+    this.operando1 = null;
+    this.operando2 = null;
+    this.operatore = null;
+    this.buffer = '';
+    this.testoDisp = '0';
+  }
+
+  typeOfButton_old(but: string) {
+    switch (but) {
+      case 'AC':
         this.getReset();
         break;
-        case('='):
+      case '=':
         this.getResult();
         break;
-        default:
-          this.pressButton(but);
-          break;
+      default:
+        this.pressButton(but);
+        break;
     }
   }
-          }
 
+  typeOfButton(but: string) {
+    console.log(
+      'typeOfButton() inizio: buffer=',
+      this.buffer,
+      'but=',
+      but,
+      ', op1=',
+      this.operando1,
+      ', op=',
+      this.operatore,
+      'op2=',
+      this.operando2
+    );
+
+    if (but == 'AC') {
+      this.doReset();
+      return;
+    }
+
+    if (this.operando1 == null) {
+      if (
+        but == '0' ||
+        but == '1' ||
+        but == '2' ||
+        but == '3' ||
+        but == '4' ||
+        but == '5' ||
+        but == '6' ||
+        but == '7' ||
+        but == '8' ||
+        but == '9'
+      ) {
+        this.buffer += but;
+        this.testoDisp = this.buffer;
+      } else {
+        // leggendo operando1, è stato premuto un tasto diverso dal numero
+        if (
+          this.operatore == null &&
+          (but == '+' || but == '-' || but == '*' || but == '/')
+        ) {
+          this.operando1 = parseFloat(this.buffer);
+          this.operatore = but;
+          this.buffer = '';
+        }
+      }
+    } else if (this.operatore != null && this.operando2 == null) {
+      if (
+        but == '0' ||
+        but == '1' ||
+        but == '2' ||
+        but == '3' ||
+        but == '4' ||
+        but == '5' ||
+        but == '6' ||
+        but == '7' ||
+        but == '8' ||
+        but == '9'
+      ) {
+        this.buffer += but;
+        this.testoDisp = this.buffer;
+      } else {
+        // leggendo operando2, è stato premuto un tasto diverso dal numero
+        if (but == '+' || but == '-' || but == '*' || but == '/' || but == '=') {
+          this.operatore = ( but == '=' ? this.operatore : but );
+          this.operando2 = parseFloat(this.buffer);
+          this.buffer = '';
+
+          const res: number = this.calcolare(
+            this.operatore,
+            this.operando1,
+            this.operando2
+          );
+          this.operando1 = res;
+          this.operatore = null;
+          this.operando2 = null;
+          this.testoDisp = String(res);
+        }
+      }
+    }
+    console.log(
+      'typeOfButton() fine: buffer=',
+      this.buffer,
+      'but=',
+      but,
+      ', op1=',
+      this.operando1,
+      ', op=',
+      this.operatore,
+      'op2=',
+      this.operando2
+    );
+  }
+
+  calcolare(op: string, op1: number, op2: number): number {
+    switch (op) {
+      case '+':
+        return op1 + op2;
+        break;
+      case '-':
+        return op1 - op2;
+        break;
+      case '*':
+        return op1 * op2;
+        break;
+      case '/':
+        return op1 / op2;
+        break;
+      default:
+        return 0;
+    }
+  }
+}
