@@ -13,6 +13,7 @@ export class CalcolatriceComponent {
   operatore: string | null = null;
 
   buffer: string = '';
+  firstOperation: boolean = true;
 
   setOperatore = false; // indica se è in atto un'operazione
   daCalcolare = '';
@@ -179,8 +180,14 @@ export class CalcolatriceComponent {
         this.testoDisp = this.buffer;
       } else {
         // leggendo operando2, è stato premuto un tasto diverso dal numero
-        if (but == '+' || but == '-' || but == '*' || but == '/' || but == '=') {
-          this.operatore = ( but == '=' ? this.operatore : but );
+        if (
+          but == '+' ||
+          but == '-' ||
+          but == '*' ||
+          but == '/' ||
+          but == '='
+        ) {
+          this.operatore = but == '=' ? this.operatore : but;
           this.operando2 = parseFloat(this.buffer);
           this.buffer = '';
 
@@ -189,7 +196,9 @@ export class CalcolatriceComponent {
             this.operando1,
             this.operando2
           );
+
           this.operando1 = res;
+
           this.operatore = null;
           this.operando2 = null;
           this.testoDisp = String(res);
@@ -227,5 +236,119 @@ export class CalcolatriceComponent {
       default:
         return 0;
     }
+  }
+
+  typeOfButton_new(but: string) {
+    console.log(
+      'typeOfButton() inizio: buffer=',
+      this.buffer,
+      'but=',
+      but,
+      ', op1=',
+      this.operando1,
+      ', op=',
+      this.operatore,
+      'op2=',
+      this.operando2
+    );
+
+    if (but == 'AC') {
+      this.doReset();
+      return;
+    }
+
+    if (this.operando1 == null) {
+      if (
+        but == '0' ||
+        but == '1' ||
+        but == '2' ||
+        but == '3' ||
+        but == '4' ||
+        but == '5' ||
+        but == '6' ||
+        but == '7' ||
+        but == '8' ||
+        but == '9'
+      ) {
+        this.buffer += but;
+        this.testoDisp = this.buffer;
+      } else {
+        // leggendo operando1, è stato premuto un tasto diverso dal numero
+        if (
+          this.operatore == null &&
+          (but == '+' || but == '-' || but == '*' || but == '/')
+        ) {
+          this.operando1 = parseFloat(this.buffer);
+          this.operatore = but;
+          this.buffer = '';
+        }
+      }
+    } else if (this.operatore != null && this.operando2 == null) {
+      if (
+        but == '0' ||
+        but == '1' ||
+        but == '2' ||
+        but == '3' ||
+        but == '4' ||
+        but == '5' ||
+        but == '6' ||
+        but == '7' ||
+        but == '8' ||
+        but == '9'
+      ) {
+        this.buffer += but;
+        this.testoDisp = this.buffer;
+      } else {
+        // leggendo operando2, è stato premuto un tasto diverso dal numero
+
+        if (
+          but == '+' ||
+          but == '-' ||
+          but == '*' ||
+          but == '/' ||
+          but == '='
+        ) {
+          if (but == '=') {
+            if (this.buffer.length == 0) {
+              return; // non fare nulla se l'utente preme '=' senza un operando2
+            }
+
+            //errore /0
+            if (this.operatore == '/' && this.buffer == '0') {
+              this.testoDisp = 'Errore';
+              return;
+            }
+            this.operando2 = parseFloat(this.buffer);
+            this.buffer = '';
+
+            const res: number = this.calcolare(
+              this.operatore,
+              this.operando1,
+              this.operando2
+            );
+            console.log(res);
+            this.operando1 = res;
+            this.testoDisp = String(res);
+
+            this.operando2 = null;
+          } else if (but == '+' || but == '-' || but == '*' || but == '/') {
+            // cambio operatore
+            this.operatore = but;
+          }
+        }
+      }
+    }
+    console.log(
+      'typeOfButton() fine: buffer=',
+      this.buffer,
+      'but=',
+      but,
+      ', op1=',
+      this.operando1,
+      ', op=',
+      this.operatore,
+      'op2=',
+      this.operando2
+    );
   }
 }

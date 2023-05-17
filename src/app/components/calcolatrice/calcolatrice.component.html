@@ -1,121 +1,119 @@
-
-  <div class="border border-dark rounded-start rounded-end w-200px">
-  
+<div class="border border-dark rounded-start rounded-end w-200px">
+  <div class="row p-2">
     <app-display [testoDisplay]="testoDisp"></app-display>
+  </div>
 
-    
-      <div class="row p-2">
-        <div class="col-6 " >
-          <app-calc-button
-          
-            buttonText="AC"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="/"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="*"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-      </div>
-      <div class="row p-2">
-        <div class="col-3">
-          <app-calc-button
-            buttonText="1"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="2"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="3"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="-"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-      </div>
-      <div class="row p-2">
-        <div class="col-3">
-          <app-calc-button
-            buttonText="4"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="5"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="6"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="+"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-      </div>
-      <div class="row p-2">
-        <div class="col-3">
-          <app-calc-button
-            buttonText="7"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="8"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="9"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="="
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-      </div>
-      <div class="row p-2">
-        <div class="col-9">
-          <app-calc-button
-            buttonText="0"
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-        <div class="col-3">
-          <app-calc-button
-            buttonText="."
-            (buttonClick)="typeOfButton($event)"
-          ></app-calc-button>
-        </div>
-      </div>
+  <div class="row p-2">
+    <div class="col-6">
+      <app-calc-button
+        buttonText="AC"
+        typeOfButton
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
     </div>
-  
+    <div class="col-3">
+      <app-calc-button
+        buttonText="/"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="*"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="col-3">
+      <app-calc-button
+        buttonText="1"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="2"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="3"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="-"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="col-3">
+      <app-calc-button
+        buttonText="4"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="5"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="6"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="+"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="col-3">
+      <app-calc-button
+        buttonText="7"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="8"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="9"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="="
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="col-9">
+      <app-calc-button
+        buttonText="0"
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+    <div class="col-3">
+      <app-calc-button
+        buttonText="."
+        (buttonClick)="typeOfButton_new($event)"
+      ></app-calc-button>
+    </div>
+  </div>
+</div>
